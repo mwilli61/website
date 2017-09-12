@@ -54,9 +54,6 @@ WHERE HR>50
 ORDER BY HR DESC"
 sqldf(query)
 
-
-
-
 ```
 Finally, let's look at all the instances of a player striking out less than 10 times with at least 400 at-bats. 
 ```{r}
@@ -69,10 +66,8 @@ sqldf(query)
 ## More Practice
   This practice example is identify a specific player
 ```{r}
-query<-"SELECT HR FROM Batting
-WHERE playerID= 'ruthba01'"
-
+query<- "SELECT HR FROM Batting
+WHERE playerID='ruthba01'"
 sqldf(query)
 
 ```
-
