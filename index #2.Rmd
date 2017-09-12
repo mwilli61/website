@@ -66,4 +66,13 @@ ORDER BY SO"
 sqldf(query)
 
 ```
+## More Practice
+  This practice example is identify a specific player
+```{r}
+query<-"SELECT HR FROM Batting
+WHERE playerID= 'ruthba01'"
+
+sqldf(query)
+
+```
 

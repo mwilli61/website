@@ -358,6 +358,37 @@ sqldf(query)</code></pre>
 ## 64 boudrlo01   1948    CLE  9 560
 ## 65 mitchda01   1952    CLE  9 511</code></pre>
 </div>
+<div id="more-practice" class="section level2">
+<h2>More Practice</h2>
+<p>This practice example is identify a specific player</p>
+<pre class="r"><code>query&lt;-&quot;SELECT HR FROM Batting
+WHERE playerID= 'ruthba01'&quot;
+
+sqldf(query)</code></pre>
+<pre><code>##    HR
+## 1   0
+## 2   4
+## 3   3
+## 4   2
+## 5  11
+## 6  29
+## 7  54
+## 8  59
+## 9  35
+## 10 41
+## 11 46
+## 12 25
+## 13 47
+## 14 60
+## 15 54
+## 16 46
+## 17 49
+## 18 46
+## 19 41
+## 20 34
+## 21 22
+## 22  6</code></pre>
+</div>
 
 
 
