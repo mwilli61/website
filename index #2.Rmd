@@ -42,6 +42,11 @@ WHERE teamID='PHI'and HR>30 and yearID<=1979 and yearID>=1970"
 sqldf(query)
 
 ```
+
+
+## Order By
+Below are examples using the "order by" code: 
+
 Suppose we want to see every player that hit more than 50 homeruns with the most homeruns at the top of the list.
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
