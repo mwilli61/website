@@ -42,6 +42,11 @@ WHERE teamID='PHI'and HR>30 and yearID<=1979 and yearID>=1970"
 sqldf(query)
 
 ```
+
+
+## Order By
+Below are examples using the "order by" code: 
+
 Suppose we want to see every player that hit more than 50 homeruns with the most homeruns at the top of the list.
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
@@ -49,15 +54,66 @@ WHERE HR>50
 ORDER BY HR DESC"
 sqldf(query)
 
-
-
-
 ```
 Finally, let's look at all the instances of a player striking out less than 10 times with at least 400 at-bats. 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,SO, AB FROM Batting
 WHERE SO<10 and AB>=400
 ORDER BY SO"
+sqldf(query)
+
+```
+## More Practice
+  This practice example is identify a specific player
+```{r}
+query<- "SELECT HR FROM Batting
+WHERE playerID='ruthba01'"
+sqldf(query)
+
+```
+
+  
+  ```{r}
+query<- "SELECT playerID, sum (HR) FROM Batting
+WHERE playerID='ruthba01'
+GROUP BY playerID"
+
+sqldf(query)
+
+```
+
+```{r}
+query<- "SELECT playerID, sum(HR) FROM Batting 
+GROUP BY playerID
+HAVING sum(HR)>600
+ORDER BY sum(HR) DESC"
+sqldf(query)
+```
+
+```{r}
+query<- "SELECT playerID, avg(HR) FROM Batting
+GROUP BY playerID
+HAVING avg(HR)>30
+ORDER BY avg(HR) DESC"
+sqldf(query)
+
+```
+## Joining Tables
+  In this section we learned how to join two tables from the Lahman datatbase. In order to join charts we must code the following:
+  
+```{r}
+query<- "SELECT nameFirst,nameLast,yearID,teamID,HR 
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'"
+sqldf(query)
+```
+```{r}
+query<- "SELECT nameFirst,nameLast,yearID,teamID,HR 
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE HR>50
+ORDER BY HR DESC"
 sqldf(query)
 
 ```

@@ -240,6 +240,10 @@ sqldf(query)</code></pre>
 ## 7 schmimi01   1977    PHI 38
 ## 8 luzingr01   1978    PHI 35
 ## 9 schmimi01   1979    PHI 45</code></pre>
+</div>
+<div id="order-by" class="section level2">
+<h2>Order By</h2>
+<p>Below are examples using the “order by” code:</p>
 <p>Suppose we want to see every player that hit more than 50 homeruns with the most homeruns at the top of the list.</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting
 WHERE HR&gt;50
@@ -353,6 +357,147 @@ sqldf(query)</code></pre>
 ## 63 holmeto01   1945    BSN  9 636
 ## 64 boudrlo01   1948    CLE  9 560
 ## 65 mitchda01   1952    CLE  9 511</code></pre>
+</div>
+<div id="more-practice" class="section level2">
+<h2>More Practice</h2>
+<p>This practice example is identify a specific player</p>
+<pre class="r"><code>query&lt;- &quot;SELECT HR FROM Batting
+WHERE playerID='ruthba01'&quot;
+sqldf(query)</code></pre>
+<pre><code>##    HR
+## 1   0
+## 2   4
+## 3   3
+## 4   2
+## 5  11
+## 6  29
+## 7  54
+## 8  59
+## 9  35
+## 10 41
+## 11 46
+## 12 25
+## 13 47
+## 14 60
+## 15 54
+## 16 46
+## 17 49
+## 18 46
+## 19 41
+## 20 34
+## 21 22
+## 22  6</code></pre>
+<p>```r query&lt;- “SELECT playerID, sum (HR) FROM Batting WHERE playerID=‘ruthba01’ GROUP BY playerID”</p>
+<p>sqldf(query) ```</p>
+<p><code>##   playerID sum (HR)   ## 1 ruthba01      714</code></p>
+<pre class="r"><code>query&lt;- &quot;SELECT playerID, sum(HR) FROM Batting 
+GROUP BY playerID
+HAVING sum(HR)&gt;600
+ORDER BY sum(HR) DESC&quot;
+sqldf(query)</code></pre>
+<pre><code>##    playerID sum(HR)
+## 1 bondsba01     762
+## 2 aaronha01     755
+## 3  ruthba01     714
+## 4 rodrial01     696
+## 5  mayswi01     660
+## 6 griffke02     630
+## 7 thomeji01     612
+## 8  sosasa01     609</code></pre>
+<pre class="r"><code>query&lt;- &quot;SELECT playerID, avg(HR) FROM Batting
+GROUP BY playerID
+HAVING avg(HR)&gt;30
+ORDER BY avg(HR) DESC&quot;
+sqldf(query)</code></pre>
+<pre><code>##     playerID  avg(HR)
+## 1  pujolal01 36.93750
+## 2  bondsba01 34.63636
+## 3  mcgwima01 34.29412
+## 4  kinerra01 33.54545
+## 5  aaronha01 32.82609
+## 6  bryankr01 32.50000
+## 7   ruthba01 32.45455
+## 8   sosasa01 32.05263
+## 9  cabremi01 31.85714
+## 10 belleal01 31.75000
+## 11 rodrial01 31.63636
+## 12 schmimi01 30.44444
+## 13 abreujo02 30.33333</code></pre>
+</div>
+<div id="joining-tables" class="section level2">
+<h2>Joining Tables</h2>
+<p>In this section we learned how to join two tables from the Lahman datatbase. In order to join charts we must code the following:</p>
+<pre class="r"><code>query&lt;- &quot;SELECT nameFirst,nameLast,yearID,teamID,HR 
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'&quot;
+sqldf(query)</code></pre>
+<pre><code>##    nameFirst nameLast yearID teamID HR
+## 1       Babe     Ruth   1914    BOS  0
+## 2       Babe     Ruth   1915    BOS  4
+## 3       Babe     Ruth   1916    BOS  3
+## 4       Babe     Ruth   1917    BOS  2
+## 5       Babe     Ruth   1918    BOS 11
+## 6       Babe     Ruth   1919    BOS 29
+## 7       Babe     Ruth   1920    NYA 54
+## 8       Babe     Ruth   1921    NYA 59
+## 9       Babe     Ruth   1922    NYA 35
+## 10      Babe     Ruth   1923    NYA 41
+## 11      Babe     Ruth   1924    NYA 46
+## 12      Babe     Ruth   1925    NYA 25
+## 13      Babe     Ruth   1926    NYA 47
+## 14      Babe     Ruth   1927    NYA 60
+## 15      Babe     Ruth   1928    NYA 54
+## 16      Babe     Ruth   1929    NYA 46
+## 17      Babe     Ruth   1930    NYA 49
+## 18      Babe     Ruth   1931    NYA 46
+## 19      Babe     Ruth   1932    NYA 41
+## 20      Babe     Ruth   1933    NYA 34
+## 21      Babe     Ruth   1934    NYA 22
+## 22      Babe     Ruth   1935    BSN  6</code></pre>
+<pre class="r"><code>query&lt;- &quot;SELECT nameFirst,nameLast,yearID,teamID,HR 
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE HR&gt;50
+ORDER BY HR DESC&quot;
+sqldf(query)</code></pre>
+<pre><code>##    nameFirst  nameLast yearID teamID HR
+## 1      Barry     Bonds   2001    SFN 73
+## 2       Mark   McGwire   1998    SLN 70
+## 3      Sammy      Sosa   1998    CHN 66
+## 4       Mark   McGwire   1999    SLN 65
+## 5      Sammy      Sosa   2001    CHN 64
+## 6      Sammy      Sosa   1999    CHN 63
+## 7      Roger     Maris   1961    NYA 61
+## 8       Babe      Ruth   1927    NYA 60
+## 9       Babe      Ruth   1921    NYA 59
+## 10    Jimmie      Foxx   1932    PHA 58
+## 11      Hank Greenberg   1938    DET 58
+## 12      Ryan    Howard   2006    PHI 58
+## 13      Luis  Gonzalez   2001    ARI 57
+## 14      Alex Rodriguez   2002    TEX 57
+## 15      Hack    Wilson   1930    CHN 56
+## 16       Ken   Griffey   1997    SEA 56
+## 17       Ken   Griffey   1998    SEA 56
+## 18      Babe      Ruth   1920    NYA 54
+## 19      Babe      Ruth   1928    NYA 54
+## 20     Ralph     Kiner   1949    PIT 54
+## 21    Mickey    Mantle   1961    NYA 54
+## 22     David     Ortiz   2006    BOS 54
+## 23      Alex Rodriguez   2007    NYA 54
+## 24      Jose  Bautista   2010    TOR 54
+## 25     Chris     Davis   2013    BAL 53
+## 26    Mickey    Mantle   1956    NYA 52
+## 27    Willie      Mays   1965    SFN 52
+## 28    George    Foster   1977    CIN 52
+## 29      Mark   McGwire   1996    OAK 52
+## 30      Alex Rodriguez   2001    TEX 52
+## 31       Jim     Thome   2002    CLE 52
+## 32     Ralph     Kiner   1947    PIT 51
+## 33    Johnny      Mize   1947    NY1 51
+## 34    Willie      Mays   1955    NY1 51
+## 35     Cecil   Fielder   1990    DET 51
+## 36    Andruw     Jones   2005    ATL 51</code></pre>
 </div>
 
 
