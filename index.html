@@ -387,9 +387,17 @@ sqldf(query)</code></pre>
 ## 20 34
 ## 21 22
 ## 22  6</code></pre>
-<p>```r query&lt;- “SELECT playerID, sum (HR) FROM Batting WHERE playerID=‘ruthba01’ GROUP BY playerID”</p>
-<p>sqldf(query) ```</p>
-<p><code>##   playerID sum (HR)   ## 1 ruthba01      714</code></p>
+</div>
+<div id="aggregation" class="section level2">
+<h2>Aggregation</h2>
+<p>The following are examples of codes to aggregate information:</p>
+<pre class="r"><code>query&lt;- &quot;SELECT playerID, sum (HR) FROM Batting
+WHERE playerID='ruthba01'
+GROUP BY playerID&quot;
+
+sqldf(query)</code></pre>
+<pre><code>##   playerID sum (HR)
+## 1 ruthba01      714</code></pre>
 <pre class="r"><code>query&lt;- &quot;SELECT playerID, sum(HR) FROM Batting 
 GROUP BY playerID
 HAVING sum(HR)&gt;600
@@ -498,6 +506,25 @@ sqldf(query)</code></pre>
 ## 34    Willie      Mays   1955    NY1 51
 ## 35     Cecil   Fielder   1990    DET 51
 ## 36    Andruw     Jones   2005    ATL 51</code></pre>
+<p>Last example is using everything we learned from the information above:</p>
+<pre class="r"><code>query&lt;- &quot;SELECT nameFirst, nameLast, avg(salary)
+FROM Salaries INNER JOIN Master
+ON Salaries.playerID=Master.playerID
+WHERE nameFirst='Bob'
+GROUP BY Salaries.playerID
+HAVING avg(salary)&gt;1000000
+ORDER BY avg(salary) DESC &quot;
+
+sqldf(query)</code></pre>
+<pre><code>##   nameFirst  nameLast avg(salary)
+## 1       Bob   Wickman     2635812
+## 2       Bob     Welch     1930417
+## 3       Bob     Howry     1804583
+## 4       Bob    Horner     1416667
+## 5       Bob Tewksbury     1288182
+## 6       Bob   Stanley     1067500
+## 7       Bob     Boone     1047580
+## 8       Bob     Ojeda     1035926</code></pre>
 </div>
 
 

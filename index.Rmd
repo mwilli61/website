@@ -71,9 +71,9 @@ WHERE playerID='ruthba01'"
 sqldf(query)
 
 ```
-
-  
-  ```{r}
+## Aggregation 
+  The following are examples of codes to aggregate information:
+```{r}
 query<- "SELECT playerID, sum (HR) FROM Batting
 WHERE playerID='ruthba01'
 GROUP BY playerID"
@@ -81,6 +81,7 @@ GROUP BY playerID"
 sqldf(query)
 
 ```
+
 
 ```{r}
 query<- "SELECT playerID, sum(HR) FROM Batting 
@@ -116,5 +117,17 @@ WHERE HR>50
 ORDER BY HR DESC"
 sqldf(query)
 
+```
+Last example is using everything we learned from the information above:
+```{r}
+query<- "SELECT nameFirst, nameLast, avg(salary)
+FROM Salaries INNER JOIN Master
+ON Salaries.playerID=Master.playerID
+WHERE nameFirst='Bob'
+GROUP BY Salaries.playerID
+HAVING avg(salary)>1000000
+ORDER BY avg(salary) DESC "
+
+sqldf(query)
 ```
 
